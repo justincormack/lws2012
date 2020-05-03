@@ -1,0 +1,3979 @@
+<!DOCTYPE html>
+<!--
+
+  Copyright 2012 Justin Cormack
+
+  Adapted from html5rocks presentation, Copyright 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<html manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>D3 Presentation</title>
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css">
+    <link href="src/prettify/prettify.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="styles/fonts.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="styles/presentation.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="styles/common.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="styles/colorbrewer.css" rel="stylesheet" type="text/css" media="screen" />
+    <link class="theme" href="styles/default.css" rel="stylesheet" type="text/css" media="screen" />
+    <link class="theme" href="styles/moon.css" rel="stylesheet" type="text/css" media="screen" />
+    <link class="theme" href="styles/sand.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link class="theme" href="styles/sea_wave.css" rel="stylesheet" type="text/css" media="screen"/>
+  </head>
+  <body>
+
+<script src="d3/d3.min.js"></script>
+<script src="d3/d3.csv.min.js"></script>
+<script src="d3/d3.time.min.js"></script>
+<script src="d3/d3.geo.min.js"></script>
+<script src="d3/d3.geom.min.js"></script>
+<script src="d3/d3.layout.min.js"></script>
+
+    <div id="flex-container">
+    <nav id="helpers">
+      <button title="Previous slide" id="nav-prev" class="nav-prev">&#8701;</button> 
+      <button title="Jump to a random slide" id="slide-no">5</button> 
+      <button title="Next slide" id="nav-next" class="nav-next">&#8702;</button>
+      <menu>
+        <button type="checkbox" data-command="toc" title="Table of Contents" class="toc">TOC</button>
+        <!-- <button type="checkbox" data-command="resources" title="View Related Resources">&#9734;</button> -->
+        <button type="checkbox" data-command="notes" title="View Slide Notes">&#9999;</button>
+        <button type="checkbox" data-command="source" title="View slide source">&#8635;</button>
+        <button type="checkbox" data-command="help" title="View Help">?</button>
+      </menu>
+    </nav>
+    <div class="slides">
+      <div id="presentation-counter">Loading...</div>
+        <div class="slide" id="landing-slide">
+          <section class="middle">
+            <p>This presentation is an HTML5 website</p>
+            <p>Press <span id="left-init-key" class="key">&rarr;</span> key to advance.</p>
+          </section>
+          <aside class="note">
+            <section>
+              Welcome! (This field is for speaker notes and commentary.)
+            </section>
+          </aside> 
+        </div>
+
+        <div class="slide" id="controls-slide">
+          <header>Slides controls</header>
+          <section>
+            <ul>
+              <li><span class="key">&larr;</span> and <span class="key">&rarr;</span> to move around.</li>
+              <li><span class="key">Ctrl/Command</span> and <span class="key">+</span> or <span class="key">-</span> to zoom in and out if slides don’t fit.</li>
+              <li><span class="key">S</span> to view page source.</li>
+              <li><span class="key">T</span> to change the theme.</li>
+              <li><span class="key">H</span> to toggle syntax highlight.</li>
+              <li><span class="key">N</span> to toggle speaker notes.</li>
+              <li><span class="key">3</span> to toggle 3D effect.</li>
+              <li><span class="key">0</span> to toggle help.</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="title-slide">
+          <section class="middle">
+            <hgroup>
+              <h1>
+                d3.js
+              </h1>
+              <h2>
+                Data-driven documents – 
+                A modern approach to data and graphs on the web
+              </h2>
+            </hgroup>
+            <p>Justin Cormack <a href="http://twitter.com/justincormack">@justincormack</a></p>
+          </section>
+        </div>
+
+        <div class="slide" id="credits-slide">
+          <header><h1>Credits</h1></header>
+          <section class="middle">
+            <ul class="bullets">
+              <li>d3.js is by Mike Bostock</li>
+              <li>It is open source, and available on github at <a href="https://github.com/mbostock/d3">https://github.com/mbostock/d3</a></li>
+              <li>Thanks to the mailing list for being helpful</li>
+              <li>Thanks to all the people who wrote the demos I have used.</li>
+              <li>This presentation template was adapted from <a href="http://slides.html5rocks.com/">HTML5 rocks</a> which rocks!</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide" id="table-of-contents">
+          <header><h1>Overview</h1></header>
+          <section>
+            <ul class="bullets" id="toc-list">
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="why-title">
+          <section class="middle">
+            <h2>Why d3.js?</h2>
+            <p> </p>
+
+          </section>
+        </div>
+
+        <div class="slide why" id="why-overview">
+          <header><h1>Why d3.js?</h1></header>
+          <section>
+            <ul class="bullets">
+            <li>Most graphing packages take a configuration object.</li>
+
+            <li>D3 is much more flexible and direct, and gets over the fact that the options you want are never available.</li>
+
+            <li>Code not configuration.</li>
+
+            <li>Slower to get started but much more productive and flexible.</li>
+
+            <li>Great community.</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide why" id="why-pictures">
+          <header><h1>Why d3.js?</h1></header>
+          <section>
+            <p>Imagination is the limit to what you can make...</p>
+            <img src="img/chord.png">
+            <img src="img/choropleth.png">
+            <img src="img/stream.png">
+            <img src="img/voronoi.png">
+            <img src="img/calendar.png">
+            <img src="img/splom.png">
+          </section>
+        </div>
+
+        <div class="slide transitionSlide" id="starting-title">
+          <section class="middle">
+            <h2>Getting started</h2>
+            <p> </p>
+ 
+          </section>
+        </div>
+
+        <div class="slide starting" id="starting-overview">
+          <header><h1>Getting started</h1></header>
+          <section>
+            <ul class="bullets">
+            <li>D3 is a Javascript library for attaching data to DOM objects and then manipulating them.</li>
+
+            <li>To do anything really interesting you are going to have to learn some SVG.</li>
+
+            <li>We will talk about alternatives to SVG later...</li>
+
+            <li>Basic SVG is pretty simple, and can be debugged like any ther part of the DOM, and styled with CSS</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide starting" id="starting-1">
+          <header><h1>A simple graph</h1></header>
+          <section>
+<p>Data from <img src="img/fp-logo_50px.28f80478.png" alt="Timetric"/> 
+UK <a href="http://timetric.com/dataset/road-casualties-gb-dft/?indexes=pedal-cyclist-killed-or-seriously-injured-road-casualty-gb">cycling casualties</a>, from the <a href="http://www.dft.gov.uk/statistics">Department of Transport</a>.</p>
+
+<!--f1-->
+<pre class="prettyprint">&lt;svg id=&quot;accidents&quot;&gt;&lt;/svg&gt;
+
+&lt;script src=&quot;d3/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;d3/d3.csv.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;d3/d3.time.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+function graph(p) {
+
+  ...
+}
+
+d3.text(&quot;data/timetric.csv&quot;, graph);
+
+&lt;/script&gt;
+</pre>
+<p>Another useful tip for storing numerical data is to use a Google spreadsheet, as there is a JSONP interface to extract the data in a reasonably easy way, and it is easy to edit, giving you a cheap numerical CMS!</p>
+
+          </section>
+        </div>
+
+<div class="slide starting" id="starting-2">
+<section>
+<p>Parse our CSV data, as it is just strings, and set up the size of the SVG area, and the smaller area we will draw the data in.</p>
+<pre class="prettyprint">
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"),
+                               parseFloat(val(e))];
+                     });
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)");
+</pre>
+</section>
+</div>
+
+<div class="slide starting" id="starting-3">
+<section>
+<p>Let us work out the largest and smallest values in our data, and map them to the drawing area.</p>
+<pre class="prettyprint">
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  /* y starts at the top and goes down in SVG */
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice();
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+</pre>
+</section>
+</div>
+
+<div class="slide starting" id="starting-4">
+<section>
+<p>The simplest chart draws some points (circles) at each data point.</p>
+<pre class="prettyprint">
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)
+      .enter().append("circle")
+         .attr("r", 5)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .append("title")
+         .text(function(e) { return date(e).getFullYear() + ": " + val(e); });
+</pre>
+<p>This creates another SVG group element, with a class of <code>points</code>.</p>
+
+<p>Then it selects all the <code>circle</code> elements under that, which there are none yet. We could have used any selection here, but doing it like this makes updates easier.</p>
+
+<p>Then we attach our array of data <code>d</code>, and say that we wish to append a new circle to the ones (<code>enter()</code>) that do not yet exist, which is all of them initially.</p>
+
+<p>Then we set the attributes: r (radius) is a constant, but cx and cy, the position of the centre of the circle will be a function of the data item corresponding to the point.</p>
+</section>
+</div>
+
+<div class="slide starting" id="starting-5">
+<section>
+<p>Add some CSS to make it look nicer.</p>
+<pre class="prettyprint">
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+</pre>
+
+SVG works with CSS just like HTML, but there are some different properties such as <code>stroke</code> and <code>fill</code> which most SVG elements use for the outline and centre of shapes.
+</section>
+</div>
+
+
+<div class="slide starting" id="starting-6">
+<header><h1>Let’s take a look...</h1></header>
+<section class="middle">
+<style>
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+</style>
+
+<svg id="accidents1">
+</svg>
+
+<script>
+
+function graph(p) {
+  if (p === null) {
+    console.log("no data returned");
+    return;
+  }
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"), parseFloat(val(e))]; });
+
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents1")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)"); // this is the area we will draw the graph in, the rest is the axes.
+
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice(); // y is inverted in SVG
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+
+// start with points as simplest
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)                // attach the data
+      .enter().append("circle")
+         .attr("r", 5)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .append("title")
+         .text(function(e) { return date(e).getFullYear() + ": " + val(e); });
+
+}
+
+d3.text("data/timetric.csv", graph); // Ajax on text file
+
+</script>
+
+</section>
+</div>
+
+
+<div class="slide starting" id="starting-7">
+<header><h1>Add some axes...</h1></header>
+<section>
+<pre class="prettyprint">
+  yAxis = d3.svg.axis().scale(y).orient("left").
+    ticks(4).tickSize(6, 0, 0);
+
+  g.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + -10 + ",0)")
+    .call(yAxis);
+
+  xAxis = d3.svg.axis().scale(x).orient("bottom").
+    ticks(d3.time.years, 5).tickSubdivide(4).tickSize(6, 3, 3);
+ 
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (ymax + 10) + ")")
+    .call(xAxis);
+
+  g.append("text")
+    .attr("transform", "rotate(-90),translate(-250,-65)")
+    .text("cyclists killed or injured");
+</pre>
+<pre class="prettyprint">
+.axis path, .axis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+}
+</pre>
+</section>
+</div>
+
+
+
+
+<div class="slide starting" id="starting-8">
+<header><h1>Looking better...</h1></header>
+<section class="middle">
+<style>
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+}
+</style>
+
+<svg id="accidents2">
+</svg>
+
+<script>
+
+function graph(p) {
+  if (p === null) {
+    console.log("no data returned");
+    return;
+  }
+
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"), parseFloat(val(e))]; });
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents2")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)"); // this is the area we will draw the graph in, the rest is the axes.
+
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice(); // y is inverted in SVG
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+
+// start with points as simplest
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)                // attach the data
+      .enter().append("circle")
+         .attr("r", 5)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .append("title")
+         .text(function(e) { return date(e).getFullYear() + ": " + val(e); });
+
+  yAxis = d3.svg.axis().scale(y).orient("left").
+    ticks(4).tickSize(6, 0, 0);
+
+  g.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + -10 + ",0)")
+    .call(yAxis);
+
+  xAxis = d3.svg.axis().scale(x).orient("bottom").
+    ticks(d3.time.years, 5).tickSubdivide(4).tickSize(6, 3, 3);
+ 
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (ymax + 10) + ")")
+    .call(xAxis);
+
+// add a y axis label
+  g.append("text")
+    .attr("transform", "rotate(-90),translate(-250,-65)")
+    .text("cyclists killed or injured");
+
+}
+
+d3.text("data/timetric.csv", graph); // Ajax on text file
+
+</script>
+
+</section>
+</div>
+
+
+
+<div class="slide starting" id="starting-9">
+<header><h1>Add a line and some fill...</h1></header>
+<section>
+<p>Lines and paths are not made of separate DOM elements for each section.</p>
+<p>Instead they have a little language <code class="prettyprint">&lt;path d=&quot;M0,0 L10,0 L10,10 L0,10 Z&quot;&gt;</code>, but there are functions to help us build these strings.</p>
+<pre class="prettyprint">
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  g.append("path")
+    .attr("class", "line")
+    .attr("d", line(d));
+
+  var path = line(d) + "L500,300L0,300Z"; // close path around bottom
+
+  g.append("path")
+    .attr("class", "area")
+    .attr("d", path);
+</pre>
+</section>
+</div>
+
+
+<div class="slide starting" id="starting-10">
+<header><h1>Some CSS and a gradient</h1></header>
+<section>
+<pre class="prettyprint">
+&lt;svg id=&quot;accidents&quot;&gt;
+&lt;defs&gt;
+   &lt;linearGradient id=&quot;fade&quot; x1=&quot;0%&quot; y1=&quot;50%&quot; x2=&quot;50%&quot; y2=&quot;100%&quot;&gt;
+     &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#F5A9A9&quot; /&gt;
+     &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#D8F6CE&quot; /&gt;
+   &lt;/linearGradient&gt;
+&lt;/defs&gt;
+&lt;/svg&gt;
+</pre>
+<pre class="prettyprint">
+path.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1px;
+}
+
+path.area {
+  stroke: none;
+  fill: url(#fade);
+}
+</pre>
+</section>
+</div>
+
+
+<div class="slide starting" id="starting-11">
+<header><h1>Looking even better...</h1></header>
+<section class="middle">
+<style>
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+}
+
+path.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1px;
+}
+
+#starting-11 path.area {
+  stroke: none;
+  fill: url(#fade);
+}
+</style>
+
+<svg id="accidents3">
+<defs>
+   <linearGradient id="fade" x1="0%" y1="50%" x2="50%" y2="100%">
+     <stop offset="0%" style="stop-color:#F5A9A9" />
+     <stop offset="100%" style="stop-color:#D8F6CE" />
+   </linearGradient>
+</defs>
+</svg>
+
+
+<script>
+
+function graph(p) {
+  if (p === null) {
+    console.log("no data returned");
+    return;
+  }
+
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"), parseFloat(val(e))]; });
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents3")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)"); // this is the area we will draw the graph in, the rest is the axes.
+
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice(); // y is inverted in SVG
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// line and fill
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  g.append("path")
+    .attr("class", "line")
+    .attr("d", line(d));
+
+  var path = line(d) + "L500,300L0,300Z"; // close path around bottom
+
+  g.append("path")
+   .attr("class", "area")
+    .attr("d", path);
+
+// points
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)                // attach the data
+      .enter().append("circle")
+         .attr("r", 5)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .append("title")
+         .text(function(e) { return date(e).getFullYear() + ": " + val(e); });
+
+  yAxis = d3.svg.axis().scale(y).orient("left").
+    ticks(4).tickSize(6, 0, 0);
+
+  g.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + -10 + ",0)")
+    .call(yAxis);
+
+  xAxis = d3.svg.axis().scale(x).orient("bottom").
+    ticks(d3.time.years, 5).tickSubdivide(4).tickSize(6, 3, 3);
+ 
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (ymax + 10) + ")")
+    .call(xAxis);
+
+// add a y axis label
+  g.append("text")
+    .attr("transform", "rotate(-90),translate(-250,-65)")
+    .text("cyclists killed or injured");
+}
+
+d3.text("data/timetric.csv", graph); // Ajax on text file
+
+</script>
+
+</section>
+</div>
+
+<div class="slide transitionSlide" id="transitions-title">
+          <section class="middle">
+            <h2>Transitions</h2>
+            <p> </p>
+
+          </section>
+</div>
+
+
+<div class="slide transitions" id="transitions-1">
+<header><h1>Transitions</h1></header>
+<section>
+<p>Our graph just appears, let us add a little transition as it draws.</p>
+<p>For a simple uniform, delayed fade this is simple:</p>
+<pre class="prettyprint">
+  g.append("path")
+    .attr("class", "area")
+    .attr("fill-opacity", 0.0001)
+    .attr("d", path)
+  .transition().delay(2000).duration(3000).attr("fill-opacity", 1);
+</pre>
+<p>But this is d3, we can also use functions, so the transition is data-dependent</p>
+<pre class="prettyprint">
+  var fade = d3.scale.linear().domain(xs).range([1000, 6000]);
+  function ff(e) { return fade(date(e)); };
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)
+      .enter().append("circle")
+         .attr("r", 0)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .transition().duration(ff).attr("r", 5);
+</pre>
+</section>
+</div>
+
+<div class="slide transitions" id="transitions-2">
+<header><h1>Some movement</h1></header>
+<section class="middle">
+<style>
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+}
+
+path.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1px;
+}
+
+#transitions-2 path.area {
+  fill: url(#fade2);
+  stroke: none;
+}
+</style>
+
+<script>
+
+function graph2(p) {
+
+  if (p === null) {
+    console.log("no data returned");
+    return;
+  }
+
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"), parseFloat(val(e))]; });
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents4")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)"); // this is the area we will draw the graph in, the rest is the axes.
+
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice(); // y is inverted in SVG
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// line and fill
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  g.append("path")
+    .attr("class", "line")
+    .attr("d", line(d))
+    .attr("stroke-opacity", 0.0001)
+  .transition()
+    .duration(3000)
+    .attr("stroke-opacity", 1);
+
+  var path = line(d) + "L500,300L0,300Z"; // close path around bottom
+
+  g.append("path")
+    .attr("class", "area")
+    .attr("fill-opacity", 0.0001)
+    .attr("d", path)
+  .transition().delay(2000).duration(3000).attr("fill-opacity", 0.5);
+
+// points
+
+  var fade = d3.scale.linear().domain(xs).range([1000, 6000]);
+  function ff(e) { return fade(date(e)); };
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)
+      .enter().append("circle")
+         .attr("r", 0)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .transition().duration(ff).attr("r", 5);
+
+  yAxis = d3.svg.axis().scale(y).orient("left").
+    ticks(4).tickSize(6, 0, 0);
+
+  g.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + -10 + ",0)")
+    .call(yAxis);
+
+  xAxis = d3.svg.axis().scale(x).orient("bottom").
+    ticks(d3.time.years, 5).tickSubdivide(4).tickSize(6, 3, 3);
+ 
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (ymax + 10) + ")")
+    .call(xAxis);
+
+// add a y axis label
+  g.append("text")
+    .attr("transform", "rotate(-90),translate(-250,-65)")
+    .text("cyclists killed or injured");
+}
+
+</script>
+
+<svg id="accidents4">
+<defs>
+   <linearGradient id="fade2" x1="0%" y1="50%" x2="50%" y2="100%">
+     <stop offset="0%" style="stop-color:#F5A9A9" />
+     <stop offset="100%" style="stop-color:#D8F6CE" />
+   </linearGradient>
+</defs>
+</svg>
+
+<script>
+d3.select("div#transitions-2").on("click", function() {d3.text("data/timetric.csv", graph2);});
+</script>
+
+</section>
+</div>
+
+
+<div class="slide transitions" id="transitions-3">
+<header><h1>Dynamic update</h1></header>
+<section>
+<p>Now let us dynamically add new data, as we would with real time updates.</p>
+<p>First add new data and update all our scaling functions, nothing new here.</p>
+<pre class="prettyprint">
+d.push(newitem);
+var xs = d3.extent(d, date);
+var ys = d3.extent(d, val);
+var x = d3.time.scale().domain(xs).range([0, xmax]);
+var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice();
+function xx(e) { return x(date(e)); };
+function yy(e) { return y(val(e)); };
+</pre>
+<p>Select the existing circles and transition to new position</p>
+<pre class="prettyprint">
+var update = g.selectAll("g.points")
+    .selectAll("circle")
+    .data(d);
+
+update.transition().duration(1000)
+    .attr("cx", xx)
+    .attr("cy", yy)
+    .attr("r", 5);
+</pre>
+</section>
+</div>
+
+<div class="slide transitions" id="transitions-4">
+<header><h1>Add new circles and axes...</h1></header>
+<section>
+<p>Now let us add the new points, just the ones returned by <code class="prettyprint">enter()</code>.</p>
+<pre class="prettyprint">
+update.enter()
+  .append("circle")
+     .attr("cx", xx)
+     .attr("cy", yy)
+     .attr("r", 0)
+  .transition().duration(1000)
+     .attr("r", 5);
+</pre>
+<p>Update the axes.</p>
+<pre class="prettyprint">
+xAxis.scale(x);
+yAxis.scale(y);
+
+svg.select("g.x.axis").transition().duration(1000).call(xAxis);
+svg.select("g.y.axis").transition().duration(1000).call(yAxis);
+</pre>
+</section>
+</div>
+
+<div class="slide transitions" id="transitions-5">
+<header><h1>How are we getting on so far?</h1></header>
+<section class="middle">
+<style>
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+}
+
+path.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1px;
+}
+
+#transitions-5 path.area {
+  fill: url(#fade3);
+  stroke: none;
+}
+</style>
+
+<script>
+
+function graph(p) {
+  if (p === null) {
+    console.log("no data returned");
+    return;
+  }
+
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"), parseFloat(val(e))]; });
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents5")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)"); // this is the area we will draw the graph in, the rest is the axes.
+
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice(); // y is inverted in SVG
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// line and fill
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  g.append("path")
+    .attr("class", "line")
+    .attr("d", line(d))
+    .attr("stroke-opacity", 0.0001)
+  .transition()
+    .duration(3000)
+    .attr("stroke-opacity", 1);
+
+  var path = line(d) + "L500,300L0,300Z"; // close path around bottom
+
+  g.append("path")
+    .attr("class", "area")
+    .attr("fill-opacity", 0.0001)
+    .attr("d", path)
+  .transition().delay(2000).duration(3000).attr("fill-opacity", 0.5);
+
+// points
+
+  var fade = d3.scale.linear().domain(xs).range([1000, 6000]);
+  function ff(e) { return fade(date(e)); };
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)
+      .enter().append("circle")
+         .attr("r", 0)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .transition().duration(ff).attr("r", 5);
+
+  yAxis = d3.svg.axis().scale(y).orient("left").
+    ticks(4).tickSize(6, 0, 0);
+
+  g.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + -10 + ",0)")
+    .call(yAxis);
+
+  xAxis = d3.svg.axis().scale(x).orient("bottom").
+    ticks(d3.time.years, 5).tickSubdivide(4).tickSize(6, 3, 3);
+ 
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (ymax + 10) + ")")
+    .call(xAxis);
+
+// add a y axis label
+  g.append("text")
+    .attr("transform", "rotate(-90),translate(-250,-65)")
+    .text("cyclists killed or injured");
+
+function addnew() {
+var last = date(d[d.length - 1]);
+var n = new Date(last.getFullYear() + 1, last.getMonth(), last.getDay())
+
+  d.push([n, Math.random() * 150 - 50 + val(d[d.length - 1])]);
+
+  //d.shift();
+
+  /* update extent of our data */
+  var xs = d3.extent(d, date);
+  var ys = d3.extent(d, val);
+
+  /* update scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice();
+
+  /* update scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// bind new data
+  var update = g.selectAll("#transitions-5 g.points")
+      .selectAll("circle")
+      .data(d);
+
+// update original points
+  update.transition().duration(1000)
+      .attr("cx", xx)
+      .attr("cy", yy)
+      .attr("r", 5);
+
+// new points
+  update.enter().append("circle")
+         .attr("cx", xx)
+         .attr("cy", yy)
+         .attr("r", 0)
+       .transition().duration(1000)
+         .attr("r", 5);
+
+// update axes
+  xAxis.scale(x);
+  yAxis.scale(y);
+
+  svg.select("#transitions-5 g.x.axis").transition().duration(1000).call(xAxis);
+  svg.select("#transitions-5 g.y.axis").transition().duration(1000).call(yAxis);
+
+}
+
+d3.select("div#transitions-5").on("click", addnew);
+
+
+}
+
+</script>
+
+<svg id="accidents5">
+<defs>
+   <linearGradient id="fade3" x1="0%" y1="50%" x2="50%" y2="100%">
+     <stop offset="0%" style="stop-color:#F5A9A9" />
+     <stop offset="100%" style="stop-color:#D8F6CE" />
+   </linearGradient>
+</defs>
+</svg>
+
+<script>
+d3.text("data/timetric.csv", graph);
+
+</script>
+
+</section>
+</div>
+
+<div class="slide transitions" id="transitions-6">
+<header><h1>Now for the line and fill...</h1></header>
+<section>
+<p>The line is fairly simple.</p>
+<pre class="prettyprint">
+var line = d3.svg.line()
+  .x(xx)
+  .y(yy);
+
+d3.selectAll("path.line").transition().duration(1000)
+  .attr("d", line(d));
+</pre>
+<p>This works as for a string with numbers in, d3 interpolates each corresponding one, and leaves new ones unchanged.</p>
+<p>If we do this for the area, it behaves a bit oddly, as it interpolates the extra points at the end</p>
+<pre class="prettyprint">
+var path = line(d) + "L500,300L0,300Z";
+
+d3.selectAll("path.area").transition().duration(1000)
+  .attr("d", path);
+</pre>
+</section>
+</div>
+
+
+<div class="slide transitions" id="transitions-8">
+<header><h1>Slightly wrong transitions...</h1></header>
+<section class="middle">
+<style>
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+}
+
+path.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1px;
+}
+
+#transitions-8 path.area {
+  fill: url(#fade5);
+  stroke: none;
+}
+</style>
+
+<script>
+
+function graph(p) {
+  if (p === null) {
+    console.log("no data returned");
+    return;
+  }
+
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"), parseFloat(val(e))]; });
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents6")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)"); // this is the area we will draw the graph in, the rest is the axes.
+
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice(); // y is inverted in SVG
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// line and fill
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  g.append("path")
+    .attr("class", "line")
+    .attr("d", line(d))
+    .attr("stroke-opacity", 0.0001)
+  .transition()
+    .duration(3000)
+    .attr("stroke-opacity", 1);
+
+  var path = line(d) + "L500,300L0,300Z"; // close path around bottom
+
+  g.append("path")
+    .attr("class", "area")
+    .attr("fill-opacity", 0.0001)
+    .attr("d", path)
+  .transition().delay(2000).duration(3000).attr("fill-opacity", 0.5);
+
+// points
+
+  var fade = d3.scale.linear().domain(xs).range([1000, 6000]);
+  function ff(e) { return fade(date(e)); };
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)
+      .enter().append("circle")
+         .attr("r", 0)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .transition().duration(ff).attr("r", 5);
+
+  yAxis = d3.svg.axis().scale(y).orient("left").
+    ticks(4).tickSize(6, 0, 0);
+
+  g.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + -10 + ",0)")
+    .call(yAxis);
+
+  xAxis = d3.svg.axis().scale(x).orient("bottom").
+    ticks(d3.time.years, 5).tickSubdivide(4).tickSize(6, 3, 3);
+ 
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (ymax + 10) + ")")
+    .call(xAxis);
+
+// add a y axis label
+  g.append("text")
+    .attr("transform", "rotate(-90),translate(-250,-65)")
+    .text("cyclists killed or injured");
+
+function addnew() {
+var last = date(d[d.length - 1]);
+var n = new Date(last.getFullYear() + 1, last.getMonth(), last.getDay())
+
+  d.push([n, Math.random() * 150 - 50 + val(d[d.length - 1])]);
+
+  //d.shift();
+
+  /* update extent of our data */
+  var xs = d3.extent(d, date);
+  var ys = d3.extent(d, val);
+
+  /* update scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice();
+
+  /* update scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// bind new data
+  var update = g.selectAll("svg#accidents6 g.points")
+      .selectAll("circle")
+      .data(d);
+
+// update original points
+  update.transition().duration(1000)
+      .attr("cx", xx)
+      .attr("cy", yy)
+      .attr("r", 5);
+
+// new points
+  update.enter().append("circle")
+         .attr("cx", xx)
+         .attr("cy", yy)
+         .attr("r", 0)
+       .transition().duration(1000)
+         .attr("r", 5);
+
+// update axes
+  xAxis.scale(x);
+  yAxis.scale(y);
+
+  svg.select("svg#accidents6 g.x.axis").transition().duration(1000).call(xAxis);
+  svg.select("svg#accidents6 g.y.axis").transition().duration(1000).call(yAxis);
+
+// line
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  d3.selectAll("svg#accidents6 path.line").transition().duration(1000)
+    .attr("d", line(d));
+
+//path
+  var path = line(d) + "L500,300L0,300Z"; // close path around bottom
+
+  d3.selectAll("svg#accidents6 path.area").transition().duration(1000)
+    .attr("d", path);
+
+}
+
+d3.select("div#transitions-8").on("click", addnew);
+
+
+}
+
+</script>
+
+<svg id="accidents6">
+<defs>
+   <linearGradient id="fade5" x1="0%" y1="50%" x2="50%" y2="100%">
+     <stop offset="0%" style="stop-color:#F5A9A9" />
+     <stop offset="100%" style="stop-color:#D8F6CE" />
+   </linearGradient>
+</defs>
+</svg>
+
+<script>
+d3.text("data/timetric.csv", graph);
+
+</script>
+
+</section>
+</div>
+
+<div class="slide transitions" id="transitions-9">
+<header><h1>We need a custom interpolator</h1></header>
+<section>
+<p>An interpolation function tells us how to calculate in between values for transitions.</p>
+<pre class="prettyprint">
+var path = line(d);
+
+var trail = "L500,300L0,300Z";
+
+d3.selectAll("path.area").transition().duration(1000)
+  .attrTween("d", function(d, i, a) {
+    return function(t) {
+      return d3.interpolateString(a.slice(0, -trail.length), path)(t) + trail;
+    };
+  });
+</pre>
+<p>We can adjust the X axis scale as it gets longer.</p>
+<pre class="prettyprint">
+if (date(d[d.length -1]).getFullYear() - date(d[0]).getFullYear() > 50) {
+  xAxis.ticks(d3.time.years, 10).tickSubdivide(9)
+}
+</pre>
+</section>
+</div>
+
+<div class="slide transitions" id="transitions-10">
+<header><h1>All working now...</h1></header>
+<section class="middle">
+<style>
+svg {
+  background-color: #fafafa;
+}
+
+.points circle {
+  stroke: red;
+  stroke-width: 1px;
+  fill: #fcdfff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+}
+
+path.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1px;
+}
+
+#transitions-10 path.area {
+  fill: url(#fade10);
+  stroke: none;
+}
+</style>
+
+<script>
+
+function graph10(p) {
+  if (p === null) {
+    console.log("no data returned");
+    return;
+  }
+
+  /* projection functions for convenience */
+  function date(e) { return e[0]; };
+  function val(e) { return e[1]; };
+
+  var d = d3.csv.parseRows(p)
+    .map(function(e) { return [d3.time.format.iso.parse(date(e) + "Z"), parseFloat(val(e))]; });
+
+  /* these are the sizes of our graph */
+  var xmax = 500;
+  var ymax = 300;
+
+  var svg = d3.select("svg#accidents10")
+     .attr("width", xmax + 100)
+     .attr("height", ymax + 100)
+
+  var g = svg.append("g")
+       .attr("transform", "translate(80,20)"); // this is the area we will draw the graph in, the rest is the axes.
+
+  /* extent of our data */
+  var xs = d3.extent(d, date);   // returns array of [minimum, maximum] 
+  var ys = d3.extent(d, val);
+
+  /* scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice(); // y is inverted in SVG
+
+  /* scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// line and fill
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  g.append("path")
+    .attr("class", "line")
+    .attr("d", line(d))
+    .attr("stroke-opacity", 0.0001)
+  .transition()
+    .duration(3000)
+    .attr("stroke-opacity", 1);
+
+  var path = line(d) + "L500,300L0,300Z"; // close path around bottom
+
+  g.append("path")
+    .attr("class", "area")
+    .attr("fill-opacity", 0.0001)
+    .attr("d", path)
+  .transition().delay(2000).duration(3000).attr("fill-opacity", 0.5);
+
+// points
+
+  var fade = d3.scale.linear().domain(xs).range([1000, 6000]);
+  function ff(e) { return fade(date(e)); };
+
+  g.append("g")
+    .attr("class", "points")
+    .selectAll("circle")
+      .data(d)
+      .enter().append("circle")
+         .attr("r", 0)
+         .attr("cx", xx)
+         .attr("cy", yy)
+      .transition().duration(ff).attr("r", 5);
+
+  yAxis = d3.svg.axis().scale(y).orient("left").
+    ticks(4).tickSize(6, 0, 0);
+
+  g.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + -10 + ",0)")
+    .call(yAxis);
+
+  xAxis = d3.svg.axis().scale(x).orient("bottom").
+    ticks(d3.time.years, 5).tickSubdivide(4).tickSize(6, 3, 3);
+ 
+  g.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + (ymax + 10) + ")")
+    .call(xAxis);
+
+// add a y axis label
+  g.append("text")
+    .attr("transform", "rotate(-90),translate(-250,-65)")
+    .text("cyclists killed or injured");
+
+function addnew10() {
+var last = date(d[d.length - 1]);
+var n = new Date(last.getFullYear() + 1, last.getMonth(), last.getDay())
+
+  d.push([n, Math.random() * 150 - 50 + val(d[d.length - 1])]);
+
+  //d.shift();
+
+  /* update extent of our data */
+  var xs = d3.extent(d, date);
+  var ys = d3.extent(d, val);
+
+  /* update scales */
+  var x = d3.time.scale().domain(xs).range([0, xmax]);
+  var y = d3.scale.linear().domain(ys).range([ymax, 0]).nice();
+
+  /* update scales applied to data */
+  function xx(e) { return x(date(e)); };
+  function yy(e) { return y(val(e)); };
+
+// bind new data
+  var update = g.selectAll("svg#accidents10 g.points")
+      .selectAll("circle")
+      .data(d);
+
+// update original points
+  update.transition().duration(1000)
+      .attr("cx", xx)
+      .attr("cy", yy)
+      .attr("r", 5);
+
+// new points
+  update.enter().append("circle")
+         .attr("cx", xx)
+         .attr("cy", yy)
+         .attr("r", 0)
+       .transition().duration(1000)
+         .attr("r", 5);
+
+// update axes
+  xAxis.scale(x);
+
+if (date(d[d.length -1]).getFullYear() - date(d[0]).getFullYear() > 50) {
+  xAxis.ticks(d3.time.years, 10).tickSubdivide(9)
+}
+
+  yAxis.scale(y);
+
+  svg.select("svg#accidents10 g.x.axis").transition().duration(1000).call(xAxis);
+  svg.select("svg#accidents10 g.y.axis").transition().duration(1000).call(yAxis);
+
+// line
+  var line = d3.svg.line()
+    .x(xx)
+    .y(yy);
+
+  d3.selectAll("svg#accidents10 path.line").transition().duration(1000)
+    .attr("d", line(d));
+
+//path
+  var path = line(d);
+
+  var trail = "L500,300L0,300Z";
+
+  d3.selectAll("svg#accidents10 path.area").transition().duration(1000)
+    .attrTween("d", function(d, i, a) {
+      return function(t) { return d3.interpolateString(a.slice(0, -trail.length), path)(t) + trail;};
+    });
+
+}
+
+d3.select("div#transitions-10").on("click", addnew10);
+
+
+}
+
+</script>
+
+<svg id="accidents10">
+<defs>
+   <linearGradient id="fade10" x1="0%" y1="50%" x2="50%" y2="100%">
+     <stop offset="0%" style="stop-color:#F5A9A9" />
+     <stop offset="100%" style="stop-color:#D8F6CE" />
+   </linearGradient>
+</defs>
+</svg>
+
+<script>
+d3.text("data/timetric.csv", graph10);
+
+</script>
+
+</section>
+</div>
+
+
+
+
+
+        <div class="slide transitions" id="transitions-nextlast">
+          <header><h1>That is the basics</h1></header>
+          <section>
+            <ul class="bullets">
+            <li>Make DOM objects, attach data to them, use CSS.</li>
+
+            <li>The data can affect any attribute, shape, colour, size, position, opacity, text, ...</li>
+
+            <li>All the attributes can have transitions applied.</li>
+
+            <li>Also you can add and remove objects to dynamically update your visualization.</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="slide transitions" id="transitions-last">
+          <header><h1>There is more stuff to help you</h1></header>
+          <section>
+            <ul class="bullets">
+            <li>Log scales, power scales, quantized scales, ordinal scales ...</li>
+
+            <li>Helper functions for different charts: chord, histogram, hierarchy, pie, stack, tree, cluster, pack ...</li>
+
+            <li>Geographic projections and country map data.</li>
+
+            <li>Drag and touch events, colour space functions, date formatting, array manipulation, ...</li>
+            </ul>
+          </section>
+        </div>
+
+
+
+
+
+        <div class="slide transitionSlide" id="demos-title">
+          <section class="middle">
+            <h2>Showing what you can do</h2>
+            <p> </p>
+ 
+          </section>
+        </div>
+
+
+
+<div class="slide demo demoframe" id="demo-1">
+<header><h1>Election 2010 by hotspots.io</h1></header>
+<section>
+<p><a href="http://hotspots.io/election">http://hotspots.io/election</a>
+<img src="img/hotspots.io.png" alt="hotspots.io" data-iframe="http://hotspots.io/election"></img>
+</section>
+</div>
+
+<div class="slide demo shuffle" id="demo-2">
+<header><h1>Shuffling by Mike Bostock</h1></header>
+<section class="middle" id="shuffle">
+<p><a href="http://bost.ocks.org/mike/shuffle/">http://bost.ocks.org/mike/shuffle/</a>
+<style>
+.shuffle line {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.shuffle line.conflict {
+  stroke: red !important;
+  stroke-width: 4px !important;
+}
+
+.shuffle .play path {
+  stroke: #fff;
+  stroke-width: 6px;
+}
+
+.shuffle .play:hover path {
+  fill: red;
+}
+
+.shuffle .play rect {
+  fill: none;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.shuffle svg {
+  background-color: transparent;
+}
+
+</style>
+
+<script>
+
+var margin = {top: 0, right: 24, bottom: 0, left: 24},
+    width = 800,
+    height = 80 - margin.top - margin.bottom,
+    size = height * .4;
+
+var n = 200;
+
+var x = d3.scale.ordinal()
+    .domain(d3.range(n))
+    .rangePoints([0, width]);
+
+var y = d3.scale.linear()
+    .domain([0, n - 1])
+    .range([-Math.PI / 4, Math.PI / 4]);
+
+function chart(update) {
+  var m = 200;
+
+  var svg = d3.select("section#shuffle").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .style("margin-left", -margin.left + "px")
+      .style("margin-right", -margin.right + "px")
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var line = svg.selectAll("line")
+      .data(d3.range(n))
+    .enter().append("line")
+      .attr("x2", function(d) { return size * Math.sin(y(d)); })
+      .attr("y2", function(d) { return -size * Math.cos(y(d)); })
+      .attr("transform", function(d, i) { return "translate(" + x(i) + "," + height + ")"; })
+      .style("stroke", "#666");
+
+  var play = svg.append("g")
+      .attr("class", "play")
+      .on("click", start);
+
+  play.append("path")
+      .attr("d", "M-30,-30L30,0L-30,30Z")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(.6)");
+
+  play.append("rect")
+      .attr("width", width)
+      .attr("height", height);
+
+  function start() {
+    play.style("display", "none");
+    var interval = setInterval(function() {
+      if (!(m = update(line, m))) {
+        m = n;
+        clearInterval(interval);
+        setTimeout(function() {
+          play.style("display", null);
+          line = svg.selectAll("line")
+              .attr("transform", function(d, i) { return "translate(" + x(i) + "," + height + ")"; })
+              .style("stroke", "#666");
+        }, 5000);
+      }
+    }, 50);
+  }
+
+  return svg;
+}
+</script>
+
+<p>This site demonstrates different shuffling algorithms:
+
+<script>
+
+chart(function(line, m) {
+  var e = line[0].splice(~~(Math.random() * m), 1)[0];
+
+  d3.select(e)
+      .style("stroke", "#000")
+      .style("stroke-width", "4px")
+    .transition()
+      .duration(750)
+      .attr("transform", "translate(" + x(n - m) + "," + size + ")")
+      .style("stroke-width", "1.5px");
+
+  return --m;
+});
+
+</script>
+
+<script>
+
+chart(function(line, m) {
+  var e = line[0].splice(~~(Math.random() * m), 1)[0];
+
+  d3.select(e)
+      .style("stroke", "#000")
+      .style("stroke-width", "4px")
+    .transition()
+      .duration(750)
+      .attr("transform", "translate(" + x(n - m) + "," + size +")")
+      .style("stroke-width", "1.5px");
+
+  line
+      .attr("transform", function(d, i) { return "translate(" + x(i) + "," + height + ")"; });
+
+  return --m;
+});
+
+</script>
+
+<script>
+
+chart(function(line, m) {
+  var i = ~~(Math.random() * m--),
+      a = line[0][i],
+      b = line[0][m];
+
+  d3.select(line[0][i] = b).transition()
+      .duration(750)
+      .attr("transform", "translate(" + x(i) + "," + height + ")");
+
+  d3.select(line[0][m] = a)
+      .style("stroke", "#000")
+      .style("stroke-width", "4px")
+    .transition()
+      .duration(750)
+      .attr("transform", "translate(" + x(m) + "," + height + ")")
+      .style("stroke-width", "1.5px");
+
+  return m;
+});
+
+</script>
+</section>
+</div>
+
+<div class="slide demo demoframe" id="demo-3">
+<header><h1>Koalas to the Max by Vadim Ogievetsky</h1></header>
+<section>
+<p><a href="http://www.koalastothemax.com/">http://www.koalastothemax.com/</a></p>
+<div data-iframe="http://www.koalastothemax.com/"></div>
+</section>
+</div>
+
+
+<div class="slide demo" id="demo-4">
+<header><h1>Mapping by Mike Bostock</h1></header>
+<section class="middle">
+<p><a href="http://mbostock.github.com/d3/ex/choropleth.html">http://mbostock.github.com/d3/ex/choropleth.html</a></p>
+<style>
+#demo-4 svg {
+  background: #eee;
+  width: 850px;
+  height: 475px;
+}
+
+#demo-4 #counties path {
+  stroke: #fff;
+  stroke-width: .25px;
+}
+
+#demo-4 #states path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+</style>
+<div id="unemployment"></div>
+<script>
+var data; // loaded asynchronously
+
+var path = d3.geo.path();
+
+var svg = d3.select("#unemployment")
+  .append("svg");
+
+var counties = svg.append("g")
+    .attr("id", "counties")
+    .attr("class", "Blues");
+
+var states = svg.append("g")
+    .attr("id", "states");
+
+d3.json("data/us-counties.json", function(json) {
+  counties.selectAll("path")
+      .data(json.features)
+    .enter().append("path")
+      .attr("class", data ? quantize : null)
+      .attr("d", path);
+});
+
+d3.json("data/us-states.json", function(json) {
+  states.selectAll("path")
+      .data(json.features)
+    .enter().append("path")
+      .attr("d", path);
+});
+
+d3.json("data/unemployment.json", function(json) {
+  data = json;
+  counties.selectAll("path")
+      .attr("class", quantize);
+});
+
+function quantize(d) {
+  return "q" + Math.min(8, ~~(data[d.id] * 9 / 12)) + "-9";
+}
+</script>
+</section>
+</div>
+
+<div class="slide demo demoframe" id="demo-5">
+<header><h1>UK University Statistics by Keming Labs</h1></header>
+<section>
+<p><a href="http://keminglabs.com/ukuni/">http://keminglabs.com/ukuni/</a>
+<img src="img/universitystats.png" alt="UK university stats" data-iframe="http://keminglabs.com/ukuni/"></img>
+</section>
+</div>
+
+
+<div class="slide demo" id="demo-6">
+<header><h1>Trigonometry by Humble software</h1></header>
+<section class="middle">
+<p><a href="http://www.humblesoftware.com/demos/trig_d3">http://www.humblesoftware.com/demos/trig_d3</a></p>
+<div id="trig"></div>
+<style>
+#trig {
+  margin: 20px;
+}
+.trig path,
+.trig circle,
+.trig line {
+  stroke: steelblue;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.trig .axis {
+  stroke: #999;
+}
+
+.trig text {
+  fill: #444;
+  font-family: sans-serif;
+  font-size: 22;
+}
+
+</style>
+<script>
+//
+// Trig
+//
+
+(function () {
+
+  var
+    ID_TRIG = '#trig',
+    X1      = 'x1',
+    X2      = 'x2',
+    Y1      = 'y1',
+    Y2      = 'y2';
+
+  var
+    data    = [],
+    width   = 760,
+    height  = 260,
+    xmin    = -1.2,
+    xmax    = 5,
+    ymin    = -height * (xmax - xmin) / width / 2,
+    ymax    = -ymin,
+    xScale  = d3.scale.linear(),
+    yScale  = d3.scale.linear(),
+    vis     = d3.select(ID_TRIG).append('svg:svg'),
+    decor   = vis.append('svg:g'),
+    graph   = vis.append('svg:g'),
+    path    = graph.append('svg:path'),
+    b       = graph.append('svg:line'),
+    c       = graph.append('svg:line'),
+    circle  = graph.append('svg:circle'),
+    dot     = graph.append('svg:circle'),
+    label   = graph.append('svg:text'),
+    sine    = d3.svg.line(),
+    time    = 0,
+    i;
+
+  for (i = 0; i < 84; i++) {
+    data.push(i * 10 / 84);
+  }
+
+  xScale
+    .domain([xmin, xmax])
+    .range([0, width]);
+
+  yScale
+    .domain([ymin, ymax])
+    .range([0, height]);
+
+  vis
+    .attr('class', 'trig')
+    .attr('width', width)
+    .attr('height', height);
+   
+  sine
+    .x(function (d, i) { return xScale(d); })
+    .y(function (d, i) { return yScale(Math.sin(d - time)); });
+
+  // X-Axis
+  decor.append('svg:line')
+    .attr('class', 'axis')
+    .attr(X1, xScale(xmin))
+    .attr(Y1, yScale(0))
+    .attr(X2, xScale(xmax))
+    .attr(Y2, yScale(0));
+
+  decor.append('svg:line')
+    .attr('class', 'axis')
+    .attr(X1, xScale(Math.PI))
+    .attr(Y1, yScale(0))
+    .attr(X2, xScale(Math.PI))
+    .attr(Y2, yScale(0) + 8);
+
+  decor.append("svg:text")
+    .text(String.fromCharCode(960))
+    .attr("x", Math.round(xScale(Math.PI)))
+    .attr("y", (yScale(0)) + 24)
+    .attr("text-anchor", "middle");
+
+  // Y-Axis
+  decor.append('svg:line')
+    .attr('class', 'axis')
+    .attr(X1, xScale(0))
+    .attr(Y1, yScale(ymin))
+    .attr(X2, xScale(0))
+    .attr(Y2, yScale(ymax));
+
+  // Time
+  label
+    .attr("x", 2)
+    .attr("y", 24);
+
+  // Circle
+  circle
+    .attr('cx', xScale(0))
+    .attr('cy', yScale(0))
+    .attr('r', xScale(1) - xScale(0));
+
+  // Dot
+  dot
+    .attr('cx', xScale(0))
+    .attr('r', 4)
+    .style('fill', '#fff');
+
+  // Triangle
+  c
+    .attr(X1, xScale(0))
+    .attr(Y1, yScale(0));
+
+  function draw() {
+
+    var
+      x = xScale(Math.cos(time)),
+      y = yScale(-Math.sin(time));
+
+    path
+      .attr('d', sine(data));
+
+    label
+      .text('t = '+ Math.floor(time / Math.PI));
+
+    c
+      .attr(X2, x)
+      .attr(Y2, y);
+
+    b
+      .attr(X1, xScale(0))
+      .attr(Y1, y)
+      .attr(X2, x)
+      .attr(Y2, y);
+
+    dot
+      .attr('cy', y);
+
+    time += .015;
+
+    setTimeout(draw, 35);
+  }
+  draw();
+
+})();
+
+</script>
+
+</section>
+</div>
+
+
+
+
+
+
+<div class="slide demo" id="demo-7">
+<header><h1>Force-directed layouts by Mike Bostock</h1></header>
+<section class="middle">
+<p><a href="http://mbostock.github.com/d3/ex/force.html">http://mbostock.github.com/d3/ex/force.html</a></p>
+<div id="forcediagram"></div>
+<style>
+#demo-7 circle.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+#demo-7 line.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+</style>
+<script>
+
+function anim(json) {
+  var w = 700,
+      h = 460,
+      fill = d3.scale.category20();
+
+  var vis = d3.select("#forcediagram").append("svg")
+      .attr("width", w)
+      .attr("height", h);
+
+  var force = d3.layout.force()
+      .charge(-120)
+      .linkDistance(30)
+      .nodes(json.nodes)
+      .links(json.links)
+      .size([w, h])
+      .start();
+
+  var link = vis.selectAll("line.link")
+      .data(json.links)
+    .enter().append("line")
+      .attr("class", "link")
+      .style("stroke-width", function(d) { return Math.sqrt(d.value); })
+      .attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
+
+  var node = vis.selectAll("circle.node")
+      .data(json.nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; })
+      .attr("r", 5)
+      .style("fill", function(d) { return fill(d.group); })
+      .call(force.drag);
+
+  node.append("title")
+      .text(function(d) { return d.name; });
+
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
+}
+
+var j;
+
+d3.text("data/miserables.json", function(json) {
+
+  anim(JSON.parse(json));
+
+  d3.select("#demo-7").on("click", function() {
+    d3.select("#demo-7 svg").remove();
+    anim(JSON.parse(json));
+  });
+});
+
+
+
+</script>
+</section>
+</div>
+
+
+
+<div class="slide demo" id="demo-8">
+<header><h1>Voroboids by Jason Davies</h1></header>
+<section class="middle">
+<p><a href="http://www.jasondavies.com/voroboids/">http://www.jasondavies.com/voroboids/</a></p>
+<div id="voroboids" class="hide"></div>
+
+<style>
+#voroboids svg {
+  display: block;
+  border: solid 1px #666;
+  overflow: hidden;
+}
+
+#voroboids path {
+  fill: yellow;
+  stroke: #000;
+  stroke-width: .5px;
+}
+
+#voroboids circle {
+  fill: #ccc;
+  stroke: #000;
+  pointer-events: none;
+}
+</style>
+<script>
+// Boid flocking based on http://harry.me/2011/02/17/neat-algorithms---flocking
+var boid = (function() {
+  function boid() {
+    var position = [0, 0],
+        velocity = [0, 0],
+        gravityCenter = null,
+        neighborRadius = 50,
+        maxForce = .1,
+        maxSpeed = 1,
+        separationWeight = 2,
+        alignmentWeight = 1,
+        cohesionWeight = 1,
+        desiredSeparation = 10;
+
+    function boid(neighbors) {
+      var accel = flock(neighbors);
+      d3_ai_boidWrap(position);
+      velocity[0] += accel[0];
+      velocity[1] += accel[1];
+      if (gravityCenter) {
+        var g = d3_ai_boidGravity(gravityCenter, position, neighborRadius);
+        velocity[0] += g[0];
+        velocity[1] += g[1];
+      }
+      d3_ai_boidLimit(velocity, maxSpeed);
+      position[0] += velocity[0];
+      position[1] += velocity[1];
+      return position;
+    }
+
+    function flock(neighbors) {
+      var separation = [0, 0],
+          alignment = [0, 0],
+          cohesion = [0, 0],
+          separationCount = 0,
+          alignmentCount = 0,
+          cohesionCount = 0,
+          i = -1,
+          l = neighbors.length;
+      while (++i < l) {
+        var n = neighbors[i];
+        if (n === this) continue;
+        var npos = n.position(),
+            d = d3_ai_boidDistance(position, npos);
+        if (d > 0) {
+          if (d < desiredSeparation) {
+            var tmp = d3_ai_boidNormalize(d3_ai_boidSubtract(position.slice(), npos));
+            separation[0] += tmp[0] / d;
+            separation[1] += tmp[1] / d;
+            separationCount++;
+          }
+          if (d < neighborRadius) {
+            var nvel = n.velocity();
+            alignment[0] += nvel[0];
+            alignment[1] += nvel[1];
+            alignmentCount++;
+            cohesion[0] += npos[0];
+            cohesion[1] += npos[1];
+            cohesionCount++;
+          }
+        }
+      }
+
+      if (separationCount > 0) {
+        separation[0] /= separationCount;
+        separation[1] /= separationCount;
+      }
+
+      if (alignmentCount > 0) {
+        alignment[0] /= alignmentCount;
+        alignment[1] /= alignmentCount;
+      }
+      d3_ai_boidLimit(alignment, maxForce);
+
+      if (cohesionCount > 0) {
+        cohesion[0] /= cohesionCount;
+        cohesion[1] /= cohesionCount;
+      } else {
+        cohesion = position.slice();
+      }
+      cohesion = steerTo(cohesion);
+
+      return [
+        separation[0] * separationWeight +
+         alignment[0] * alignmentWeight +
+          cohesion[0] * cohesionWeight,
+        separation[1] * separationWeight +
+         alignment[1] * alignmentWeight +
+          cohesion[1] * cohesionWeight
+      ];
+    }
+
+    function steerTo(target) {
+      var desired = d3_ai_boidSubtract(target, position),
+          d = d3_ai_boidMagnitude(desired);
+
+      if (d > 0) {
+        d3_ai_boidNormalize(desired);
+
+        // Two options for desired vector magnitude (1 -- based on distance, 2 -- maxspeed)
+        var mul = maxSpeed * (d < 100 ? d / 100 : 1);
+        desired[0] *= mul;
+        desired[1] *= mul;
+
+        // Steering = Desired minus Velocity
+        var steer = d3_ai_boidSubtract(desired, velocity);
+        d3_ai_boidLimit(steer, maxForce)  // Limit to maximum steering force
+      } else {
+        steer = [0, 0];
+      }
+      return steer;
+    }
+
+    boid.position = function(x) {
+      if (!arguments.length) return position;
+      position = x;
+      return boid;
+    }
+
+    boid.velocity = function(x) {
+      if (!arguments.length) return velocity;
+      velocity = x;
+      return boid;
+    }
+
+    boid.gravityCenter = function(x) {
+      if (!arguments.length) return gravityCenter;
+      gravityCenter = x;
+      return boid;
+    }
+
+    boid.neighborRadius = function(x) {
+      if (!arguments.length) return neighborRadius;
+      neighborRadius = x;
+      return boid;
+    }
+
+    boid.maxForce = function(x) {
+      if (!arguments.length) return maxForce;
+      maxForce = x;
+      return boid;
+    }
+
+    boid.maxSpeed = function(x) {
+      if (!arguments.length) return maxSpeed;
+      maxSpeed = x;
+      return boid;
+    }
+
+    boid.separationWeight = function(x) {
+      if (!arguments.length) return separationWeight;
+      separationWeight = x;
+      return boid;
+    }
+
+    boid.alignmentWeight = function(x) {
+      if (!arguments.length) return alignmentWeight;
+      alignmentWeight = x;
+      return boid;
+    }
+
+    boid.cohesionWeight = function(x) {
+      if (!arguments.length) return cohesionWeight;
+      cohesionWeight = x;
+      return boid;
+    }
+
+    boid.desiredSeparation = function(x) {
+      if (!arguments.length) return desiredSeparation;
+      desiredSeparation = x;
+      return boid;
+    }
+
+    return boid;
+  }
+
+  function d3_ai_boidNormalize(a) {
+    var m = d3_ai_boidMagnitude(a);
+    if (m > 0) {
+      a[0] /= m;
+      a[1] /= m;
+    }
+    return a;
+  }
+
+  function d3_ai_boidWrap(position) {
+    if (position[0] > w) position[0] = 0;
+    else if (position[0] < 0) position[0] = w;
+    if (position[1] > h) position[1] = 0;
+    else if (position[1] < 0) position[1] = h;
+  }
+
+  function d3_ai_boidGravity(center, position, neighborRadius) {
+    if (center[0] != null) {
+      var m = d3_ai_boidSubtract(center.slice(), position),
+          d = d3_ai_boidMagnitude(m) - 10;
+      if (d > 0 && d < neighborRadius * 5) {
+        d3_ai_boidNormalize(m);
+        m[0] /= d;
+        m[1] /= d;
+        return m;
+      }
+    }
+    return [0, 0];
+  }
+
+  function d3_ai_boidDistance(a, b) {
+    var dx = a[0] - b[0],
+        dy = a[1] - b[1];
+    if (dx > w / 2) dx = w - dx;
+    if (dy > h / 2) dy = h - dy;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function d3_ai_boidSubtract(a, b) {
+    a[0] -= b[0];
+    a[1] -= b[1];
+    return a;
+  }
+
+  function d3_ai_boidMagnitude(v) {
+    return Math.sqrt(v[0] * v[0] + v[1] * v[1]);
+  }
+
+  function d3_ai_boidLimit(a, max) {
+    if (d3_ai_boidMagnitude(a) > max) {
+      d3_ai_boidNormalize(a);
+      a[0] *= max;
+      a[1] *= max;
+    }
+    return a;
+  }
+
+  return boid;
+})();
+
+var w = 960,
+    h = 500,
+    mouse = [0, 0],
+    fill = d3.scale.linear().domain([0, 1e4]).range(["brown", "steelblue"]);
+
+// Initialise boids.
+var boids = d3.range(100).map(function() {
+  return boid()
+      .position([Math.random() * w, Math.random() * h])
+      .velocity([Math.random() * 2 - 1, Math.random() * 2 - 1])
+      .gravityCenter(mouse);
+});
+
+// Compute initial positions.
+var vertices = boids.map(function(boid) {
+  return boid(boids);
+});
+
+var svg = d3.select("#voroboids")
+  .append("svg:svg")
+    .attr("width", w)
+    .attr("height", h)
+    .attr("class", "PiYG")
+    .on("mousemove", function() {
+      var m = d3.svg.mouse(this);
+      mouse[0] = m[0];
+      mouse[1] = m[1];
+    })
+    .on("mouseout", function() {
+      mouse[0] = mouse[1] = null;
+    });
+
+svg.selectAll("path")
+    .data(d3.geom.voronoi(vertices))
+  .enter().append("svg:path")
+    .attr("class", function(d, i) { return i ? "q" + (i % 9) + "-9" : null; })
+    .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
+
+svg.selectAll("circle")
+    .data(vertices)
+  .enter().append("svg:circle")
+    .attr("transform", function(d) { return "translate(" + d + ")"; })
+    .attr("r", 2);
+
+d3.select("#demo-8").on("click", function() {
+d3.select("#voroboids").attr("class", "show");
+d3.timer(function() {
+  // Update boid positions.
+  boids.forEach(function(boid, i) {
+    vertices[i] = boid(boids);
+  });
+
+  // Update circle positions.
+  svg.selectAll("circle")
+      .data(vertices)
+      .attr("transform", function(d) { return "translate(" + d + ")"; });
+
+  // Update voronoi diagram.
+  svg.selectAll("path")
+      .data(d3.geom.voronoi(vertices))
+      .attr("d", function(d) { return "M" + d.join("L") + "Z"; })
+      .style("fill", function(d) { return fill((d3.geom.polygon(d).area())); });
+});
+});
+
+
+</script>
+</section>
+</div>
+
+
+
+<div class="slide transitionSlide" id="accessibility-title">
+          <section class="middle">
+            <h2>Accessibility and compatibility</h2>
+            <p> </p>
+
+          </section>
+</div>
+
+
+
+<div class="slide accessibility" id="accessibility-browsers">
+<header><h1>SVG Compatibility</h1></header>
+<section>
+<ul class="bullets">
+<li><strong>Desktop browsers:</strong> Firefox, Chrome, Opera, IE 9, Safari</li>
+<li><strong>Mobile browsers:</strong> Mobile Safari, IE Mobile 9, Firefox Mobile, Opera Mini, Opera Mobile, Android 3.x, 4.x</li>
+<li>About 68% of users according to <a href="http://caniuse.com/#cats=SVG">Can I use</a>.</li>
+<li>The important missing browsers are IE 8 and earlier, Android 2.x (including Kindle Fire), WebOS, and screen readers.</li>
+</ul>
+</section>
+</div>
+
+<div class="slide accessibility" id="accessibility-alternatives">
+<header><h1>Alternatives to SVG</h1></header>
+<section>
+<ul class="bullets">
+<li>Chrome frame for IE 6–8</li>
+<li>Flash for IE 6–8. Involves building twice</li>
+<li><a href="http://code.google.com/p/svgweb/">svgweb</a> is a Flash based (partial) polyfill for SVG. Some people have had <a href="https://github.com/mbostock/d3/issues/73">some success</a>.</li>
+<li> VML for IE 6–8. Some graphics libraries (Raphaël) use VML as a fallback. VML is an early (1998) precursor to SVG, and is incredibly broken. Avoid.</li>
+<li>Static image fallback.</li>
+</ul>
+</section>
+</div>
+
+<div class="slide accessibility" id="accessibility-table">
+<header><h1>Or use a well designed table</h1></header>
+<section>
+
+<style>
+table {
+	border-collapse:collapse;
+	margin-bottom:15px;
+	width:90%;
+	}
+	
+	caption {
+		text-align:left;
+		font-size:15px;
+		padding-bottom:10px;
+		}
+	
+	table td,
+	table th {
+		padding:5px;
+		border:1px solid #fff;
+		border-width:0 1px 1px 0;
+		}
+		
+	thead th {
+		background:#91c5d4;
+		}
+			
+		thead th[colspan],
+		thead th[rowspan] {
+			background:#66a9bd;
+			}
+		
+	tbody th,
+	tfoot th {
+		text-align:left;
+		background:#91c5d4;
+		}
+		
+	tbody td,
+	tfoot td {
+		text-align:center;
+		background:#d5eaf0;
+		}
+		
+	tfoot th {
+		background:#b0cc7f;
+		}
+		
+	tfoot td {
+		background:#d7e1c5;
+		font-weight:bold;
+		}
+			
+	tbody tr.odd td { 
+		background:#bcd9e1;
+		}
+</style>
+<script>
+
+</script>
+
+<table id="travel" summary="Travel times to work by main mode (Autumn 2006) - Source: London Travel Report 2007 http://www.tfl.gov.uk/assets/downloads/corporate/London-Travel-Report-2007-final.pdf">
+
+	<caption><a href="http://webdesignernotebook.com/examples/style-table.html">Travel patterns in London</a>: Travel times to work by main mode, minutes</caption>
+    
+    <thead>    
+    	<tr>
+            <th scope="col" rowspan="2">Main mode</th>
+            <th scope="col" colspan="6">Area of workplace</th>
+        </tr>
+        
+        <tr>
+            <th scope="col">Central London</th>
+            <th scope="col">Rest of Inner London</th>
+            <th scope="col">Outer London</th>
+            <th scope="col">All London</th>
+            <th scope="col">Rest of Great Britain</th>
+            <th scope="col">Great Britain</th>
+        </tr>        
+    </thead>
+    
+    <tfoot>
+    	<tr>
+        	<th scope="row">All modes</th>
+            <td>55</td>
+            <td>39</td>
+            <td>27</td>
+            <td>39</td>
+            <td>20</td>
+            <td>23</td>
+        </tr>
+    </tfoot>
+    
+    <tbody>
+    	<tr>
+    		<th scope="row">Car and van</th>
+            <td>48</td>
+            <td>32</td>
+            <td>25</td>
+            <td>29</td>
+            <td>20</td>
+            <td>20</td>
+        </tr>
+        
+        <tr>
+        	<th scope="row">Motorbike, moped, scooter</th>
+            <td>36</td>
+            <td>29</td>
+            <td>27</td>
+            <td>31</td>
+            <td>19</td>
+            <td>21</td>
+        </tr>
+        
+        <tr>
+        	<th scope="row">Bicycle</th>
+            <td>33</td>
+            <td>24</td>
+            <td>20</td>
+            <td>25</td>
+            <td>15</td>
+            <td>17</td>
+        </tr>
+        
+        <tr>
+        	<th scope="row">Bus and coach</th>
+            <td>47</td>
+            <td>39</td>
+            <td>36</td>
+            <td>40</td>
+            <td>33</td>
+            <td>34</td>
+        </tr>
+        
+        <tr>
+        	<th scope="row">National Rail</th>
+            <td>69</td>
+            <td>66</td>
+            <td>43</td>
+            <td>66</td>
+            <td>47</td>
+            <td>58</td>
+        </tr>
+        
+        <tr>
+        	<th scope="row">Underground, tram, light rail</th>
+            <td>49</td>
+            <td>45</td>
+            <td>37</td>
+            <td>47</td>
+            <td>42</td>
+            <td>46</td>
+        </tr>
+        
+        <tr>
+        	<th scope="row">Walk</th>
+            <td>21</td>
+            <td>16</td>
+            <td>13</td>
+            <td>15</td>
+            <td>12</td>
+            <td>13</td>
+        </tr>
+        
+    </tbody>
+
+</table>
+
+<p>A good table is a great accessible fallback that works without Flash, and on any mobile device!</p>
+<p>A table also works for a screen reader.</p>
+<p>You can progressively enhance the table into an interactive graphic if you detect SVG.</p>
+</section>
+</div>
+
+<div class="slide accessibility" id="accessibility-htmlchart">
+<header><h1>Or use d3 with simple HTML</h1></header>
+<section>
+<p>It is possible to use d3 to generate simple HTML bar charts without using SVG, just using sized <code class="prettyprint">&lt;div&gt;</code>s.
+<div id="htmlchart" class="htmlchart"></div>
+<p>These can by styled and coloured, and animated too. You cannot do anything complex, but again it will work on old mobile browsers as well as IE.</p>
+<style>
+.htmlchart div {
+   font: 10px sans-serif;
+   background-color: steelblue;
+   text-align: right;
+   padding: 3px;
+   margin: 1px;
+   color: white;
+ }
+</style>
+<script>
+function htmlchart() {
+var data = [4, 8, 15, 16, 23, 12, 15, 34, 42];
+
+var chart = d3.select("div#htmlchart");
+
+var x = d3.scale.linear()
+     .domain([0, d3.max(data)])
+     .range(["0px", "420px"]);
+
+chart.selectAll("div")
+     .data(data)
+   .enter().append("div")
+     .style("width", x)
+     .text(function(d) { return d; });
+};
+htmlchart();
+</script>
+<pre class="prettyprint">
+var x = d3.scale.linear()
+     .domain([0, d3.max(data)])
+     .range(["0px", "420px"]);
+
+chart.selectAll("div")
+     .data(data)
+   .enter().append("div")
+     .style("width", x)
+     .text(function(d) { return d; });
+</pre>
+</section>
+</div>
+
+<!-- bonus demos! -->
+
+<div class="slide transitionSlide" id="extrademos-title">
+          <section class="middle">
+            <h2>Some more bonus demos!</h2>
+            <p> </p>
+</section>
+</div>
+
+
+<div class="slide extrademos" id="extrademos-1">
+<header><h1><a href="http://mbostock.github.com/d3/talk/20111116/#11">Transitions</a> by Mike Bostock</h1></header>
+<section class="middle">
+<p>&nbsp;</p>
+<div id="transitions-demo"></div>
+
+<style type="text/css">
+#extrademos-title svg {
+  font-size: 14px;
+}
+
+#extrademos-title .line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}
+</style>
+<script>
+function transitions() {
+
+var m = [80, 80, 80, 80],
+    w = 800 - m[1] - m[3],
+    h = 500 - m[0] - m[2];
+
+var x = d3.time.scale().range([0, w]),
+    y = d3.scale.linear().range([h / 4 - 20, 0]),
+    delay = 500,
+    duration,
+    rate;
+
+var color = d3.scale.category10();
+
+var svg = d3.select("div#transitions-demo").append("svg:svg")
+    .attr("width", w + m[1] + m[3])
+    .attr("height", h + m[0] + m[2])
+  .append("svg:g")
+    .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+
+var stocks,
+    symbols;
+
+// A line generator, for the dark stroke.
+var line = d3.svg.line()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.price); });
+
+// A line generator, for the dark stroke.
+var axis = d3.svg.line()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(h);
+
+// A area generator, for the dark stroke.
+var area = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y0(h / 4 - 20)
+    .y1(function(d) { return y(d.price); });
+
+d3.csv("data/stocks.csv", function(data) {
+  var parse = d3.time.format("%b %Y").parse,
+      filter = {AAPL: 1, AMZN: 1, MSFT: 1, IBM: 1};
+
+  stocks = data.filter(function(d) { return d.symbol in filter; });
+
+  // Nest stock values by symbol.
+  symbols = d3.nest()
+      .key(function(d) { return d.symbol; })
+      .entries(stocks);
+
+  // Parse dates and numbers. We assume values are sorted by date.
+  // Also compute the maximum price per symbol, needed for the y-domain.
+  symbols.forEach(function(s) {
+    s.values.forEach(function(d) { d.date = parse(d.date); d.price = +d.price; });
+    s.maxPrice = d3.max(s.values, function(d) { return d.price; });
+    s.sumPrice = d3.sum(s.values, function(d) { return d.price; });
+  });
+
+  // Sort by maximum price, descending.
+  symbols.sort(function(a, b) { return b.maxPrice - a.maxPrice; });
+
+  // Compute the minimum and maximum date across symbols.
+  x.domain([
+    d3.min(symbols, function(d) { return d.values[0].date; }),
+    d3.max(symbols, function(d) { return d.values[d.values.length - 1].date; })
+  ]);
+
+  var g = svg.selectAll("g")
+      .data(symbols)
+    .enter().append("svg:g")
+      .attr("class", "symbol");
+
+  d3.select("div#transitions-demo").on("click", start);
+});
+
+function start() {
+  d3.select("div#transitions-demo").on("click", null);
+  duration = d3.event.ctrlKey ? 500 : 5000;
+  rate = duration / 100;
+  lines();
+}
+
+function stop() {
+  svg.selectAll("*").remove();
+  svg.selectAll("g").data(symbols).enter().append("svg:g").attr("class", "symbol");
+  d3.select(window).on("click", start);
+}
+
+function lines() {
+  x = d3.time.scale().range([0, w]);
+  y = d3.scale.linear().range([h / 4 - 20, 0]);
+
+  // Compute the minimum and maximum date across symbols.
+  x.domain([
+    d3.min(symbols, function(d) { return d.values[0].date; }),
+    d3.max(symbols, function(d) { return d.values[d.values.length - 1].date; })
+  ]);
+
+  var g = svg.selectAll(".symbol")
+      .attr("transform", function(d, i) { return "translate(0," + (i * h / 4 + 10) + ")"; });
+
+  g.each(function(d) {
+    var e = d3.select(this);
+
+    e.append("svg:path")
+        .attr("class", "line");
+
+    e.append("svg:circle")
+        .attr("r", 5)
+        .style("fill", function(d) { return color(d.key); })
+        .style("stroke", "#000")
+        .style("stroke-width", "2px");
+
+    e.append("svg:text")
+        .attr("x", 12)
+        .attr("dy", ".31em")
+        .text(d.key);
+  });
+
+  function draw(k) {
+    g.each(function(d) {
+      var e = d3.select(this);
+      y.domain([0, d.maxPrice]);
+
+      e.select("path")
+          .attr("d", function(d) { return line(d.values.slice(0, k + 1)); });
+
+      e.selectAll("circle, text")
+          .data(function(d) { return [d.values[k], d.values[k]]; })
+          .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.price) + ")"; });
+    });
+  }
+
+  var k = 1, n = symbols[0].values.length;
+  d3.timer(function() {
+    draw(k);
+    if ((k += 2) >= n - 1) {
+      draw(n - 1);
+      setTimeout(horizons, 500);
+      return true;
+    }
+  });
+}
+
+function horizons() {
+  svg.insert("svg:defs", ".symbol")
+    .append("svg:clipPath")
+      .attr("id", "clip")
+    .append("svg:rect")
+      .attr("width", w + 60)
+      .attr("height", h / 4 - 20);
+
+  var color = d3.scale.ordinal()
+      .range(["#c6dbef", "#9ecae1", "#6baed6"]);
+
+  var g = svg.selectAll(".symbol")
+      .attr("clip-path", "url(#clip)");
+
+  area
+      .y0(h / 4 - 20);
+
+  g.select("circle").transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + (w) + "," + (-h / 4) + ")"; })
+      .remove();
+
+  g.select("text").transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + (w) + "," + (h / 4 - 20) + ")"; })
+      .attr("dy", "0em");
+
+  g.each(function(d) {
+    y.domain([0, d.maxPrice]);
+
+    d3.select(this).selectAll(".area")
+        .data(d3.range(3))
+      .enter().insert("svg:path", ".line")
+        .attr("class", "area")
+        .attr("transform", function(d) { return "translate(0," + (d * (h / 4 - 20)) + ")"; })
+        .attr("d", area(d.values))
+        .style("fill", function(d, i) { return color(i); })
+        .style("fill-opacity", 1e-6);
+
+    y.domain([0, d.maxPrice / 3]);
+
+    d3.select(this).selectAll(".line").transition()
+        .duration(duration)
+        .attr("d", line(d.values))
+        .style("stroke-opacity", 1e-6);
+
+    d3.select(this).selectAll(".area").transition()
+        .duration(duration)
+        .style("fill-opacity", 1)
+        .attr("d", area(d.values))
+        .each("end", function() { d3.select(this).style("fill-opacity", null); });
+  });
+
+  setTimeout(areas, duration + delay);
+}
+
+function areas() {
+  var g = svg.selectAll(".symbol");
+
+  axis
+      .y(h / 4 - 21);
+
+  g.select(".line")
+      .attr("d", function(d) { return axis(d.values); });
+
+  g.each(function(d) {
+    y.domain([0, d.maxPrice]);
+
+    d3.select(this).select(".line").transition()
+        .duration(duration)
+        .style("stroke-opacity", 1)
+        .each("end", function() { d3.select(this).style("stroke-opacity", null); });
+
+    d3.select(this).selectAll(".area")
+        .filter(function(d, i) { return i; })
+      .transition()
+        .duration(duration)
+        .style("fill-opacity", 1e-6)
+        .attr("d", area(d.values))
+        .remove();
+
+    d3.select(this).selectAll(".area")
+        .filter(function(d, i) { return !i; })
+      .transition()
+        .duration(duration)
+        .style("fill", color(d.key))
+        .attr("d", area(d.values));
+  });
+
+  svg.select("defs").transition()
+      .duration(duration)
+      .remove();
+
+  g.transition()
+      .duration(duration)
+      .each("end", function() { d3.select(this).attr("clip-path", null); });
+
+  setTimeout(stackedArea, duration + delay);
+}
+
+function stackedArea() {
+  var stack = d3.layout.stack()
+      .values(function(d) { return d.values; })
+      .x(function(d) { return d.date; })
+      .y(function(d) { return d.price; })
+      .out(function(d, y0, y) { d.price0 = y0; })
+      .order("reverse");
+
+  stack(symbols);
+
+  y
+      .domain([0, d3.max(symbols[0].values.map(function(d) { return d.price + d.price0; }))])
+      .range([h, 0]);
+
+  line
+      .y(function(d) { return y(d.price0); });
+
+  area
+      .y0(function(d) { return y(d.price0); })
+      .y1(function(d) { return y(d.price0 + d.price); });
+
+  var t = svg.selectAll(".symbol").transition()
+      .duration(duration)
+      .attr("transform", "translate(0,0)")
+      .each("end", function() { d3.select(this).attr("transform", null); });
+
+  t.select("path.area")
+      .attr("d", function(d) { return area(d.values); });
+
+  t.select("path.line")
+      .style("stroke-opacity", function(d, i) { return i < 3 ? 1e-6 : 1; })
+      .attr("d", function(d) { return line(d.values); });
+
+  t.select("text")
+      .attr("transform", function(d) { d = d.values[d.values.length - 1]; return "translate(" + (w) + "," + y(d.price / 2 + d.price0) + ")"; });
+
+  setTimeout(streamgraph, duration + delay);
+}
+
+function streamgraph() {
+  var stack = d3.layout.stack()
+      .values(function(d) { return d.values; })
+      .x(function(d) { return d.date; })
+      .y(function(d) { return d.price; })
+      .out(function(d, y0, y) { d.price0 = y0; })
+      .order("reverse")
+      .offset("wiggle");
+
+  stack(symbols);
+
+  line
+      .y(function(d) { return y(d.price0); });
+
+  var t = svg.selectAll(".symbol").transition()
+      .duration(duration);
+
+  t.select("path.area")
+      .attr("d", function(d) { return area(d.values); });
+
+  t.select("path.line")
+      .style("stroke-opacity", 1e-6)
+      .attr("d", function(d) { return line(d.values); });
+
+  t.select("text")
+      .attr("transform", function(d) { d = d.values[d.values.length - 1]; return "translate(" + (w) + "," + y(d.price / 2 + d.price0) + ")"; });
+
+  setTimeout(overlappingArea, duration + delay);
+}
+
+function overlappingArea() {
+  var g = svg.selectAll(".symbol");
+
+  line
+      .y(function(d) { return y(d.price0 + d.price); });
+
+  g.select(".line")
+      .attr("d", function(d) { return line(d.values); });
+
+  y
+      .domain([0, d3.max(symbols.map(function(d) { return d.maxPrice; }))])
+      .range([h, 0]);
+
+  area
+      .y0(h)
+      .y1(function(d) { return y(d.price); });
+
+  line
+      .y(function(d) { return y(d.price); });
+
+  var t = g.transition()
+      .duration(duration);
+
+  t.select(".line")
+      .style("stroke-opacity", 1)
+      .attr("d", function(d) { return line(d.values); });
+
+  t.select(".area")
+      .style("fill-opacity", .5)
+      .attr("d", function(d) { return area(d.values); });
+
+  t.select("text")
+      .attr("dy", ".31em")
+      .attr("transform", function(d) { d = d.values[d.values.length - 1]; return "translate(" + (w) + "," + y(d.price) + ")"; });
+
+  svg.append("svg:line")
+      .attr("class", "line")
+      .attr("x1", 0)
+      .attr("x2", w)
+      .attr("y1", h)
+      .attr("y2", h)
+      .style("stroke-opacity", 1e-6)
+    .transition()
+      .duration(duration)
+      .style("stroke-opacity", 1);
+
+  setTimeout(groupedBar, duration + delay);
+}
+
+function groupedBar() {
+  x = d3.scale.ordinal()
+      .domain(symbols[0].values.map(function(d) { return d.date; }))
+      .rangeBands([0, w], .1);
+
+  var x1 = d3.scale.ordinal()
+      .domain(symbols.map(function(d) { return d.key; }))
+      .rangeBands([0, x.rangeBand()]);
+
+  var g = svg.selectAll(".symbol");
+
+  var t = g.transition()
+      .duration(duration);
+
+  t.select(".line")
+      .style("stroke-opacity", 1e-6)
+      .remove();
+
+  t.select(".area")
+      .style("fill-opacity", 1e-6)
+      .remove();
+
+  g.each(function(p, j) {
+    d3.select(this).selectAll("rect")
+        .data(function(d) { return d.values; })
+      .enter().append("svg:rect")
+        .attr("x", function(d) { return x(d.date) + x1(p.key); })
+        .attr("y", function(d) { return y(d.price); })
+        .attr("width", x1.rangeBand())
+        .attr("height", function(d) { return h - y(d.price); })
+        .style("fill", color(p.key))
+        .style("fill-opacity", 1e-6)
+      .transition()
+        .duration(duration)
+        .style("fill-opacity", 1);
+  });
+
+  setTimeout(stackedBar, duration + delay);
+}
+
+function stackedBar() {
+  x.rangeRoundBands([0, w], .1);
+
+  var stack = d3.layout.stack()
+      .values(function(d) { return d.values; })
+      .x(function(d) { return d.date; })
+      .y(function(d) { return d.price; })
+      .out(function(d, y0, y) { d.price0 = y0; })
+      .order("reverse");
+
+  var g = svg.selectAll(".symbol");
+
+  stack(symbols);
+
+  y
+      .domain([0, d3.max(symbols[0].values.map(function(d) { return d.price + d.price0; }))])
+      .range([h, 0]);
+
+  var t = g.transition()
+      .duration(duration / 2);
+
+  t.select("text")
+      .delay(symbols[0].values.length * rate)
+      .attr("transform", function(d) { d = d.values[d.values.length - 1]; return "translate(" + (w) + "," + y(d.price / 2 + d.price0) + ")"; });
+
+  t.selectAll("rect")
+      .delay(function(d, i) { return i * rate; })
+      .attr("y", function(d) { return y(d.price0 + d.price); })
+      .attr("height", function(d) { return h - y(d.price); })
+      .each("end", function() {
+        d3.select(this)
+            .style("stroke", "#fff")
+            .style("stroke-opacity", 1e-6)
+          .transition()
+            .duration(duration / 2)
+            .attr("x", function(d) { return x(d.date); })
+            .attr("width", x.rangeBand())
+            .style("stroke-opacity", 1);
+      });
+
+  setTimeout(transposeBar, duration + symbols[0].values.length * rate + delay);
+}
+
+function transposeBar() {
+  x
+      .domain(symbols.map(function(d) { return d.key; }))
+      .rangeRoundBands([0, w], .2);
+
+  y
+      .domain([0, d3.max(symbols.map(function(d) { return d3.sum(d.values.map(function(d) { return d.price; })); }))]);
+
+  var stack = d3.layout.stack()
+      .x(function(d, i) { return i; })
+      .y(function(d) { return d.price; })
+      .out(function(d, y0, y) { d.price0 = y0; });
+
+  stack(d3.zip.apply(null, symbols.map(function(d) { return d.values; }))); // transpose!
+
+  var g = svg.selectAll(".symbol");
+
+  var t = g.transition()
+      .duration(duration / 2);
+
+  t.selectAll("rect")
+      .delay(function(d, i) { return i * rate; })
+      .attr("y", function(d) { return y(d.price0 + d.price) - 1; })
+      .attr("height", function(d) { return h - y(d.price) + 1; })
+      .attr("x", function(d) { return x(d.symbol); })
+      .attr("width", x.rangeBand())
+      .style("stroke-opacity", 1e-6);
+
+  t.select("text")
+      .attr("x", 0)
+      .attr("transform", function(d) { return "translate(" + (x(d.key) + x.rangeBand() / 2) + "," + h + ")"; })
+      .attr("dy", "1.31em")
+      .each("end", function() { d3.select(this).attr("x", null).attr("text-anchor", "middle"); });
+
+  svg.select("line").transition()
+      .duration(duration)
+      .attr("x2", w);
+
+  setTimeout(donut,  duration / 2 + symbols[0].values.length * rate + delay);
+}
+
+function donut() {
+  var g = svg.selectAll(".symbol");
+
+  g.selectAll("rect").remove();
+
+  var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return d.sumPrice; });
+
+  var arc = d3.svg.arc();
+
+  g.append("svg:path")
+      .style("fill", function(d) { return color(d.key); })
+      .data(function() { return pie(symbols); })
+    .transition()
+      .duration(duration)
+      .tween("arc", arcTween);
+
+  g.select("text").transition()
+      .duration(duration)
+      .attr("dy", ".31em");
+
+  svg.select("line").transition()
+      .duration(duration)
+      .attr("y1", 2 * h)
+      .attr("y2", 2 * h)
+      .remove();
+
+  function arcTween(d) {
+    var path = d3.select(this),
+        text = d3.select(this.parentNode.appendChild(this.previousSibling)),
+        x0 = x(d.data.key),
+        y0 = h - y(d.data.sumPrice);
+
+    return function(t) {
+      var r = h / 2 / Math.min(1, t + 1e-3),
+          a = Math.cos(t * Math.PI / 2),
+          xx = (-r + (a) * (x0 + x.rangeBand()) + (1 - a) * (w + h) / 2),
+          yy = ((a) * h + (1 - a) * h / 2),
+          f = {
+            innerRadius: r - x.rangeBand() / (2 - a),
+            outerRadius: r,
+            startAngle: a * (Math.PI / 2 - y0 / r) + (1 - a) * d.startAngle,
+            endAngle: a * (Math.PI / 2) + (1 - a) * d.endAngle
+          };
+
+      path.attr("transform", "translate(" + xx + "," + yy + ")");
+      path.attr("d", arc(f));
+      text.attr("transform", "translate(" + arc.centroid(f) + ")translate(" + xx + "," + yy + ")rotate(" + ((f.startAngle + f.endAngle) / 2 + 3 * Math.PI / 2) * 180 / Math.PI + ")");
+    };
+  }
+
+  setTimeout(donutExplode, duration + delay);
+}
+
+function donutExplode() {
+  var r0a = h / 2 - x.rangeBand() / 2,
+      r1a = h / 2,
+      r0b = 2 * h - x.rangeBand() / 2,
+      r1b = 2 * h,
+      arc = d3.svg.arc();
+
+  svg.selectAll(".symbol path")
+      .each(transitionExplode);
+
+  function transitionExplode(d, i) {
+    d.innerRadius = r0a;
+    d.outerRadius = r1a;
+    d3.select(this).transition()
+        .duration(duration / 2)
+        .tween("arc", tweenArc({
+          innerRadius: r0b,
+          outerRadius: r1b
+        }));
+  }
+
+  function tweenArc(b) {
+    return function(a) {
+      var path = d3.select(this),
+          text = d3.select(this.nextSibling),
+          i = d3.interpolate(a, b);
+      for (var key in b) a[key] = b[key]; // update data
+      return function(t) {
+        var a = i(t);
+        path.attr("d", arc(a));
+        text.attr("transform", "translate(" + arc.centroid(a) + ")translate(" + w / 2 + "," + h / 2 +")rotate(" + ((a.startAngle + a.endAngle) / 2 + 3 * Math.PI / 2) * 180 / Math.PI + ")");
+      };
+    }
+  }
+
+  setTimeout(stop, duration);
+}
+}
+
+transitions();
+</script>
+</section>
+</div>
+
+<div class="slide extrademos" id="extrademos-2">
+<header><h1>Alluvial Diagram by Nick Rabinowitz</h1></header>
+<section>
+<p><a href="http://nickrabinowitz.com/projects/d3/alluvial/alluvial-dynamic.html">http://nickrabinowitz.com/projects/d3/alluvial/alluvial-dynamic.html</a>
+<style>
+
+#extrademos-2 .node {
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
+#extrademos-2 .link {
+  fill: none;
+  stroke: #000;
+  opacity: .3;
+}
+
+#extrademos-2 .node {
+    stroke: none;
+}
+</style>
+<div id="alluvial"></div>
+<script>
+function alluvial() {
+
+/* Make Fake Data */
+
+var data = (function() {
+        var maxt = 6,
+            maxn = 12,
+            maxl = 4,
+            maxv = 10,
+            times = [],
+            allLinks = [],
+            counter = 0,
+            addNodes = function() {
+                var ncount = Math.random() * maxn + 1,
+                    nodes = d3.range(0, ncount).map(function(n) {
+                        return {
+                            id: counter++,
+                            nodeName: "Node " + n,
+                            nodeValue: 0,
+                            incoming: []
+                        }
+                    });
+                times.push(nodes);
+                return nodes;
+            },
+            addNext = function() {
+                var current = times[times.length-1],
+                    nextt = addNodes();
+                // make links
+                current.forEach(function(n) {
+                    var linkCount = Math.min(~~(Math.random() * maxl + 1), nextt.length),
+                        breaks = d3.range(linkCount-1)
+                            .map(function() { return Math.random() * n.nodeValue })
+                            .sort(d3.ascending),
+                        links = {},
+                        target, link, x;
+                    for (x=0; x<linkCount; x++) {
+                        do { 
+                            target = nextt[~~(Math.random() * nextt.length)];
+                        } while (target.id in links);
+                        // add link
+                        link = {
+                            source: n.id,
+                            target: target.id,
+                            value: (breaks[x] || n.nodeValue) - (breaks[x-1] || 0)
+                        };
+                        links[target.id] = link;
+                        allLinks.push(link);
+                        target.nodeValue += link.value;
+                    }
+                });
+                // prune next
+                times[times.length-1] = nextt.filter(function(n) { return n.nodeValue });
+            }
+        // initial set
+        addNodes().forEach(function(n) {
+            n.nodeValue = Math.random() * maxv + 1;
+        });
+        // now add rest
+        for (var t=0; t<maxt-1; t++) {
+            addNext();
+        }
+        
+        return {
+            times: times,
+            links: allLinks
+        };
+    })();
+
+/* Process Data */
+    
+// make a node lookup map
+var nodeMap = (function() {
+    var nm = {};
+    data.times.forEach(function(nodes) {
+        nodes.forEach(function(n) {
+            nm[n.id] = n;
+            // add links and assure node value
+            n.links = [];
+            n.incoming = [];
+            n.nodeValue = n.nodeValue || 0;
+        })
+    });
+    return nm;
+})();
+
+// attach links to nodes
+data.links.forEach(function(link) {
+    nodeMap[link.source].links.push(link);
+    nodeMap[link.target].incoming.push(link);
+});
+    
+// sort by value and calculate offsets
+data.times.forEach(function(nodes) {
+    var cumValue = 0;
+    nodes.sort(function(a,b) {
+        return d3.descending(a.nodeValue, b.nodeValue)
+    });
+    nodes.forEach(function(n, i) {
+        n.order = i;
+        n.offsetValue = cumValue;
+        cumValue += n.nodeValue;
+        // same for links
+        var lCumValue;
+        // outgoing
+        if (n.links) {
+            lCumValue = 0;
+            n.links.sort(function(a,b) {
+                return d3.descending(a.value, b.value)
+            });
+            n.links.forEach(function(l) {
+                l.outOffset = lCumValue;
+                lCumValue += l.value;
+            });
+        }
+        // incoming
+        if (n.incoming) {
+            lCumValue = 0;
+            n.incoming.sort(function(a,b) {
+                return d3.descending(a.value, b.value)
+            });
+            n.incoming.forEach(function(l) {
+                l.inOffset = lCumValue;
+                lCumValue += l.value;
+            });
+        }
+    })
+});
+data = data.times;
+
+// calculate maxes
+var maxn = d3.max(data, function(t) { return t.length }),
+    maxv = d3.max(data, function(t) { return d3.sum(t, function(n) { return n.nodeValue }) });
+
+/* Make Vis */
+    
+// settings and scales
+var w = 800,
+    h = 500,
+    gapratio = .7,
+    delay = 1500,
+    padding = 15,
+    x = d3.scale.ordinal()
+        .domain(d3.range(data.length))
+        .rangeBands([0, w], gapratio),
+    y = d3.scale.linear()
+        .domain([0, maxv])
+        .range([0, h - padding * maxn]),
+    line = d3.svg.line()
+        .interpolate('basis');
+        
+// root
+var vis = d3.select("div#alluvial")
+  .append("svg:svg")
+    .attr("width", w)
+    .attr("height", h);
+    
+    
+var t = 0;
+function update(first) {
+    // update data
+    var currentData = data.slice(0, ++t);
+    
+    // time slots
+    var times = vis.selectAll('g.time')
+        .data(currentData)
+      .enter().append('svg:g')
+        .attr('class', 'time')
+        .attr("transform", function(d, i) { return "translate(" + x(i) + ",0)" });
+        
+    // node bars
+    var nodes = times.selectAll('g.node')
+        .data(function(d) { return d })
+      .enter().append('svg:g')
+        .attr('class', 'node');
+    
+    setTimeout(function() {
+        nodes.append('svg:rect')
+            .attr('fill', 'steelblue')
+            .attr('y', function(n, i) {
+                return y(n.offsetValue) + i * padding;
+            })
+            .attr('width', x.rangeBand())
+            .attr('height', function(n) { return y(n.nodeValue) })
+          .append('svg:title')
+            .text(function(n) { return n.nodeName });
+    }, (first ? 0 : delay));
+        
+    var linkLine = function(start) {
+        return function(l) {
+            var source = nodeMap[l.source],
+                target = nodeMap[l.target],
+                gapWidth = x(0),
+                bandWidth = x.rangeBand() + gapWidth,
+                startx = x.rangeBand() - bandWidth,
+                sourcey = y(source.offsetValue) + 
+                    source.order * padding +
+                    y(l.outOffset) +
+                    y(l.value)/2,
+                targety = y(target.offsetValue) + 
+                    target.order * padding + 
+                    y(l.inOffset) +
+                    y(l.value)/2,
+                points = start ? 
+                    [
+                        [ startx, sourcey ], [ startx, sourcey ], [ startx, sourcey ], [ startx, sourcey ] 
+                    ] :
+                    [
+                        [ startx, sourcey ],
+                        [ startx + gapWidth/2, sourcey ],
+                        [ startx + gapWidth/2, targety ],
+                        [ 0, targety ]
+                    ];
+            return line(points);
+        }
+    }
+        
+    // links
+    var links = nodes.selectAll('path.link')
+        .data(function(n) { return n.incoming || [] })
+      .enter().append('svg:path')
+        .attr('class', 'link')
+        .style('stroke-width', function(l) { return y(l.value) })
+        .attr('d', linkLine(true))
+      .transition()
+        .duration(delay)
+        .attr('d', linkLine());
+        
+}
+
+function updateNext() {
+    if (t < data.length) {
+        update();
+        window.setTimeout(updateNext, delay)
+    }
+}
+update(true);
+updateNext();
+    
+
+
+}
+
+d3.select("div#extrademos-2").on("click", alluvial);
+</script>
+</section>
+</div>
+
+
+<div class="slide extrademos" id="extrademos-3">
+<header><h1><a href="http://blockses.appspot.com/1246403">Spinny Globe</a> by Mike Bostock</h1></header>
+<section>
+<style>
+
+#extrademos-3 circle {
+  fill: #f7f7f7;
+}
+
+#extrademos-3 path {
+  fill: #ccc;
+  stroke: #fff;
+}
+
+#extrademos-3 path:hover {
+  fill: steelblue;
+}
+</style>
+
+<div id="spinnyglobe"></div>
+
+<script>
+function spinny() {
+
+d3.select("div#extrademos-3").on("click", null);
+
+var projection = d3.geo.azimuthal()
+    .mode("orthographic")
+    .scale(250);
+
+var circle = d3.geo.greatCircle();
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("div#spinnyglobe").append("svg:svg")
+    .attr("width", 800)
+    .attr("height", 500);
+
+svg.append("svg:circle")
+    .attr("cx", 480)
+    .attr("cy", 250)
+    .attr("r", 220);
+
+d3.json("data/world.json", function(collection) {
+  var feature = svg.selectAll("path")
+      .data(collection.features)
+    .enter().append("svg:path")
+      .attr("d", draw);
+
+  d3.timer(function() {
+    var origin = projection.origin();
+    origin = [origin[0] + .18, origin[1] + .06];
+    projection.origin(origin);
+    circle.origin(origin);
+    feature.attr("d", draw);
+  });
+});
+
+function draw(d) {
+  return path(circle.clip(d));
+}
+
+
+}
+
+d3.select("div#extrademos-3").on("click", spinny);
+</script>
+
+</section>
+</div>
+
+<div class="slide transitionSlide" id="questions-title">
+          <section class="middle">
+            <h2>Any questions?</h2>
+            <p> </p>
+
+<div class="gameoflife"></div>
+
+		<script type="text/javascript">
+function life() {
+			var ccx = 120, // cell count x
+				ccy = 30, // cell count y
+				cw = 5, // cellWidth
+				ch = 5,  // cellHeight
+				del = 500,
+				xs = d3.scale.linear().domain([0,ccx]).range([0,ccx * cw]),
+				ys = d3.scale.linear().domain([0,ccy]).range([0,ccy * ch]),
+				states = new Array()
+				
+			d3.range(ccx).forEach(function(x) { 
+				states[x] = new Array()
+				d3.range(ccy).forEach(function(y) {
+					states[x][y] = Math.random() > .8 ? true : false
+				})
+			})
+		
+			function toGrid(states) {
+				var g = []			
+				for (x = 0; x < ccx; x++) {
+					for (y = 0; y < ccy; y++) {
+						g.push({"x": x, "y": y, "state": states[x][y]})
+					}
+				}				
+				return g
+			}				
+					
+			var vis = d3.select(".gameoflife")
+				.append("svg:svg")
+				.attr("class", "vis")
+				.attr("width", 600)
+				.attr("height", 150);					
+
+            d3.selectAll(".gameoflife").append("p").html('Life by <a href="http://www.janwillemtulp.com/2011/03/22/tutorial-conways-game-of-life-in-d3/">Jan Willem Tulp</a>');
+				
+
+			vis.selectAll("rect")
+				.data(function() { return toGrid(states) })
+			  .enter().append("svg:rect")
+				.attr("stroke", "none")
+				.attr("fill", function(d) { return d.state ? "green" : "white" })
+				.attr("x", function(d) { return xs(d.x) })
+				.attr("y", function(d) { return ys(d.y) })
+				.attr("width", cw)
+				.attr("height", ch)
+			
+			function createNewGeneration() {
+				var nextGen = new Array()
+
+				for (x = 0; x < ccx; x++) {
+					nextGen[x] = new Array()
+					for (y = 0; y < ccy; y++) {
+						var ti = y - 1 < 0 ? ccy - 1 : y - 1
+						var ri = x + 1 == ccx ? 0 : x + 1
+						var bi = y + 1 == ccy ? 0 : y + 1
+						var li = x - 1 < 0 ? ccx - 1 : x - 1
+						
+						var thisState = states[x][y]
+						var liveNeighbours = 0
+						liveNeighbours += states[li][ti] ? 1 : 0
+						liveNeighbours += states[x][ti] ? 1 : 0
+						liveNeighbours += states[ri][ti] ? 1 : 0
+						liveNeighbours += states[li][y] ? 1 : 0
+						liveNeighbours += states[ri][y] ? 1 : 0
+						liveNeighbours += states[li][bi] ? 1 : 0
+						liveNeighbours += states[x][bi] ? 1 : 0
+						liveNeighbours += states[ri][bi] ? 1 : 0
+						
+						var newState = false
+						
+						if (thisState) {
+							newState = liveNeighbours == 2 || liveNeighbours == 3 ? true : false
+						} else {
+							newState = liveNeighbours == 3 ? true : false
+						}
+						
+						nextGen[x][y] = newState
+					}
+				}
+				
+				return nextGen
+			}
+			
+			function animate() {
+				states = createNewGeneration()
+				d3.selectAll("rect")
+					.data(toGrid(states))
+				  .transition()
+					.attr("fill", function(d) { return d.state ? "green" : "white" })
+					.delay(del)
+					.duration(0)
+			};
+			
+			setInterval(animate, del);
+}
+
+d3.select("#questions-title").on("click", life);
+		</script>
+          </section>
+        </div>
+
+<script>
+function expand() {
+
+var src=d3.select(this).select("img,div").attr("data-iframe");
+
+d3.select(this).selectAll("header,section").remove();
+d3.select(this).append("iframe").attr("src", src)
+
+return false;
+}
+
+d3.selectAll("div.demoframe").on("click", expand);
+</script>
+
+
+
+
+        <div id="speaker-note" class="invisible" style="display: none;"></div>
+        <aside id="help" class="sidebar invisible" style="display: none;">
+          <table>
+            <caption>Help</caption>
+            <tbody>
+              <tr>
+                <th>Move Around</th>
+                <td>&larr;&nbsp;&rarr;</td>
+              </tr>
+              <tr>
+                <th>Source File</th>
+                <td>s</td>
+              </tr>
+              <tr>
+                <th>Change Theme</th>
+                <td>t</td>
+              </tr>
+              <tr>
+                <th>Syntax Highlight</th>
+                <td>h</td>
+              </tr>
+              <tr>
+                <th>Speaker Notes</th>
+                <td>n</td>
+              </tr>
+              <tr>
+                <th>Toggle 3D</th>
+                <td>3</td>
+              </tr>
+              <tr>
+                <th>Help</th>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+
+    </div> <!-- slides -->
+    </div>
+    
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]-->
+
+    <script src="src/prettify/prettify.js" onload="prettyPrint();">prettyPrint();</script>
+    <script src="js/utils.js"></script>
+
+    <script>
+      // Check if new appcache is available, load it, and reload page.
+      if (window.applicationCache) {
+        window.applicationCache.addEventListener('updateready', function(e) {
+          if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+            window.applicationCache.swapCache();
+            if (confirm('A new version of this site is available. Load it?')) {
+              window.location.reload();
+            }
+          }
+        }, false);
+      }
+
+/*     var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-15028909-5']);
+      _gaq.push(['_trackPageview']);
+      _gaq.push(['_trackPageLoadTime']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+*/
+    </script>
+  </body>
+</html>
